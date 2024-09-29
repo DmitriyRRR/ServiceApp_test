@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ServiceApp.Models;
+using ServiceApp.Database;
+using ServiceApp.Database.Models;
 using System.Text.Json;
 
 namespace ServiceApp.Controllers

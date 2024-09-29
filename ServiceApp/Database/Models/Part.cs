@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ServiceApp.Models
+namespace ServiceApp.Database.Models
 {
     public class Part
     {

@@ -1,4 +1,4 @@
-﻿namespace ServiceApp.Models
+﻿namespace ServiceApp.Database.Models
 {
     public class Client
     {
