@@ -2,7 +2,7 @@
 
 namespace ServiceApp.Models
 {
-    public class Parts
+    public class Part
     {
         public int Id { get; set; }
         public string Name { get; set; }
