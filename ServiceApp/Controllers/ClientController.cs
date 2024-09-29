@@ -6,7 +6,7 @@ namespace ServiceApp.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ClientController: ControllerBase
+    public class ClientController : ControllerBase
     {
         private readonly ServiceAppContext _context;
         public ClientController(ServiceAppContext context)
@@ -17,7 +17,8 @@ namespace ServiceApp.Controllers
         [Route("clients")]
         public async Task<IActionResult> GetAllClients()
         {
-            if (_context.Clients.Any())
+            bool isClients = _context.Clients.Any();
+            if (isClients)
             {
                 var clients = _context.Clients.ToList();
                 return Ok(clients);
