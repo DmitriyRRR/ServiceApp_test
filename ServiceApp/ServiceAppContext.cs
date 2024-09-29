@@ -23,9 +23,9 @@ namespace ServiceApp
                 );
 
             modelBuilder.Entity<User>().HasData(
-                new User { Id = 1, Name = "Sam", Email="sam@mail.com" },
-                new User { Id = 2, Name = "Scott", Email="scott@gmail.com"},
-                new User { Id = 3, Name = "Bill", Email="bill@yahoo.com" }
+                new User { Id = 1, Name = "Sam", Email="sam@mail.com", Password="qwerty"},
+                new User { Id = 2, Name = "Scott", Email="scott@gmail.com", Password = "qwerty" },
+                new User { Id = 3, Name = "Bill", Email="bill@yahoo.com", Password = "qwerty" }
                 );
         }
     }

@@ -20,11 +20,11 @@ namespace ServiceApp.Controllers
             if (_context.Clients.Any())
             {
                 var clients = _context.Clients.ToList();
-                return (IActionResult)clients;
+                return Ok(clients);
             }
             else
             {
-                return NotFound("No found any clients");
+                return NotFound("Did not found any clients!");
             }
         }
     }
