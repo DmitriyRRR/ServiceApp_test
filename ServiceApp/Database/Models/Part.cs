@@ -8,6 +8,7 @@ namespace ServiceApp.Database.Models
         public string Name { get; set; }
         public string Description { get; set; }
 
-        // one-to many devices-parts?
+        [ForeignKey("DeviceId")]
+        public int DeviceId { get; set; } = 0;
     }
 }

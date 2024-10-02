@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ServiceApp.Database;
 
@@ -10,9 +11,11 @@ using ServiceApp.Database;
 namespace ServiceApp.Migrations.ServiceApp
 {
     [DbContext(typeof(ServiceAppContext))]
-    partial class ServiceAppContextModelSnapshot : ModelSnapshot
+    [Migration("20241002193541_SeedDataPLus")]
+    partial class SeedDataPLus
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -99,20 +102,6 @@ namespace ServiceApp.Migrations.ServiceApp
                             ClientId = 3,
                             Description = "SSD",
                             Name = "Samung 870 EVO"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            ClientId = 2,
-                            Description = "Laptop HP",
-                            Name = "HP ENVY 15"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            ClientId = 3,
-                            Description = "Earphones, wireless",
-                            Name = "Edifier 830"
                         });
                 });
 
@@ -128,9 +117,6 @@ namespace ServiceApp.Migrations.ServiceApp
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("DeviceId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -138,57 +124,6 @@ namespace ServiceApp.Migrations.ServiceApp
                     b.HasKey("Id");
 
                     b.ToTable("Parts");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Description = "n.a.",
-                            DeviceId = 2,
-                            Name = "main flex"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Description = "for Iphone 6s",
-                            DeviceId = 1,
-                            Name = "battery Iph.6S"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Description = "n.a.",
-                            DeviceId = 0,
-                            Name = "Main camera Iph.XS"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Description = "n.a.",
-                            DeviceId = 0,
-                            Name = "Top case"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Description = "n.a.",
-                            DeviceId = 0,
-                            Name = "Keyboard"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Description = "n.a.",
-                            DeviceId = 0,
-                            Name = "Speaker"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Description = "n.a.",
-                            DeviceId = 0,
-                            Name = "LCD flex"
-                        });
                 });
 #pragma warning restore 612, 618
         }
