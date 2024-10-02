@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ServiceApp.Database;
 
@@ -10,9 +11,11 @@ using ServiceApp.Database;
 namespace ServiceApp.Migrations.ServiceApp
 {
     [DbContext(typeof(ServiceAppContext))]
-    partial class ServiceAppContextModelSnapshot : ModelSnapshot
+    [Migration("20240929200419_InitNewContext")]
+    partial class InitNewContext
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -74,26 +77,6 @@ namespace ServiceApp.Migrations.ServiceApp
                     b.HasKey("Id");
 
                     b.ToTable("Devices");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Description = "Cell phone with 5G",
-                            Name = "Iphone"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Description = "Laptop Lenovo",
-                            Name = "ThinkBook 15"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Description = "SSD",
-                            Name = "Samung 870 EVO"
-                        });
                 });
 
             modelBuilder.Entity("ServiceApp.Database.Models.Part", b =>

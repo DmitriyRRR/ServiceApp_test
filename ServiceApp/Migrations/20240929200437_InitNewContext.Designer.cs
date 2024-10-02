@@ -12,8 +12,8 @@ using ServiceApp.Database;
 namespace ServiceApp.Migrations
 {
     [DbContext(typeof(ServiceAppIdentityContext))]
-    [Migration("20240929131752_Identity-init")]
-    partial class Identityinit
+    [Migration("20240929200437_InitNewContext")]
+    partial class InitNewContext
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -157,82 +157,6 @@ namespace ServiceApp.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", "identity");
-                });
-
-            modelBuilder.Entity("ServiceApp.Database.Models.Client", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Clients", "identity");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Jhon"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Den"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Tom"
-                        });
-                });
-
-            modelBuilder.Entity("ServiceApp.Database.Models.Device", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Devices", "identity");
-                });
-
-            modelBuilder.Entity("ServiceApp.Database.Models.Part", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Parts", "identity");
                 });
 
             modelBuilder.Entity("ServiceApp.Database.Models.User", b =>

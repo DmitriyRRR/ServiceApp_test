@@ -10,7 +10,7 @@ using ServiceApp.Database;
 
 namespace ServiceApp.Migrations
 {
-    [DbContext(typeof(ServiceAppContext))]
+    [DbContext(typeof(ServiceAppIdentityContext))]
     [Migration("20240929113214_Init_migration")]
     partial class Init_migration
     {
