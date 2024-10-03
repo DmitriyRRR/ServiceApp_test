@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using ServiceApp.Database;
 using ServiceApp.Database.Models;
+using ServiceApp.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,7 @@ string connectionString = builder.Configuration.GetConnectionString("DefaultConn
 
 builder.Services.AddDbContext<ServiceAppIdentityContext>(o=>o.UseSqlServer(connectionString));
 builder.Services.AddDbContext<ServiceAppContext>(o=>o.UseSqlServer(connectionString));
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAuthorization();

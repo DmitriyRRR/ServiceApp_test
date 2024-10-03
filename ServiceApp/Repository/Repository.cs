@@ -1,34 +1,43 @@
 ﻿
+using ServiceApp.Database;
+
 namespace ServiceApp.Repository
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        public void Delete(object id)
+        private readonly ServiceAppContext _context = null;
+
+        public Repository(ServiceAppContext context)
+        {
+            _context = context;
+        }
+
+        public void DeleteAsync(int id)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<T> GetAll()
+        public Task<List<T>> GetAllAsync()
         {
             throw new NotImplementedException();
         }
 
-        public T GetById(object id)
+        public Task<T?> GetByIdAsynk(int id)
         {
             throw new NotImplementedException();
         }
 
-        public void Insert(T obj)
+        public void InsertAsync(T entity)
         {
             throw new NotImplementedException();
         }
 
-        public void Save()
+        public void SaveAsync()
         {
             throw new NotImplementedException();
         }
 
-        public void Update(T obj)
+        public void UpdateAsync(T entity)
         {
             throw new NotImplementedException();
         }
