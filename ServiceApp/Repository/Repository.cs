@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.EntityFrameworkCore;
 using ServiceApp.Database;
 
 namespace ServiceApp.Repository
@@ -12,19 +13,14 @@ namespace ServiceApp.Repository
             _context = context;
         }
 
-        public void DeleteAsync(int id)
+        public async Task<List<T>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Set<T>().ToListAsync();
         }
 
-        public Task<List<T>> GetAllAsync()
+        public async Task<T?> GetByIdAsynk(int id)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<T?> GetByIdAsynk(int id)
-        {
-            throw new NotImplementedException();
+            return await _context.Set<T>().FindAsync(id);
         }
 
         public void InsertAsync(T entity)
@@ -32,12 +28,17 @@ namespace ServiceApp.Repository
             throw new NotImplementedException();
         }
 
-        public void SaveAsync()
+        public void UpdateAsync(T entity)
         {
             throw new NotImplementedException();
         }
 
-        public void UpdateAsync(T entity)
+        public void DeleteAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SaveAsync()
         {
             throw new NotImplementedException();
         }
