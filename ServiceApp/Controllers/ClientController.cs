@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using NuGet.Protocol.Core.Types;
 using ServiceApp.Database;
 using ServiceApp.Database.Models;
+using ServiceApp.Repository;
 using System.Text.Json;
 
 namespace ServiceApp.Controllers
@@ -10,24 +12,39 @@ namespace ServiceApp.Controllers
     public class ClientController : ControllerBase
     {
         private readonly ServiceAppContext _context;
-        public ClientController(ServiceAppContext context)
+        private readonly IRepository<Client> _repository;
+        public ClientController(ServiceAppContext context, IRepository<Client> repository)
         {
             _context = context;
+            _repository = repository;
         }
+
         [HttpGet]
         [Route("clients")]
         public async Task<IActionResult> GetAllClients()
         {
-            bool isClients = _context.Clients.Any();
-            if (isClients)
+            var clients = _context.Clients.ToList();
+            return Ok(clients);
+        }
+
+        [HttpGet]
+        [Route("client")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var client = _context.Clients.FirstOrDefault(c => c.Id == id);
+            if (client is null)
             {
-                var clients = _context.Clients.ToList();
-                return Ok(clients);
+                return NotFound();
             }
-            else
-            {
-                return NotFound("Did not found any clients!");
-            }
+            return Ok(client);
+        }
+
+        [HttpDelete]
+        [Route("delete")]
+        public async Task DeleteClientAsync(int id)
+        {
+            _repository.DeleteAsync(id);
+            _repository.SaveAsync();
         }
     }
 }

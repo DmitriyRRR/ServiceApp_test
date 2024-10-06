@@ -1,6 +1,8 @@
 ﻿
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using ServiceApp.Database;
+using ServiceApp.Database.Models;
 
 namespace ServiceApp.Repository
 {
@@ -25,22 +27,23 @@ namespace ServiceApp.Repository
 
         public void InsertAsync(T entity)
         {
-            throw new NotImplementedException();
+            _context.Add<T>(entity);
         }
 
         public void UpdateAsync(T entity)
         {
-            throw new NotImplementedException();
+            _context.Entry(entity).State = EntityState.Modified;
         }
 
         public void DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var client = _context.Clients.FirstOrDefault(c => c.Id == id);
+            _context.Remove<Client>(client);
         }
 
         public void SaveAsync()
         {
-            throw new NotImplementedException();
+            _context.SaveChangesAsync();
         }
     }
 }
