@@ -25,9 +25,10 @@ namespace ServiceApp.Repository
             return await _context.Set<T>().FindAsync(id);
         }
 
-        public void InsertAsync(T entity)
+        public async Task<Task> InsertAsync(T entity)
         {
             _context.Add<T>(entity);
+            return Task.CompletedTask;
         }
 
         public void UpdateAsync(T entity)
@@ -35,15 +36,18 @@ namespace ServiceApp.Repository
             _context.Entry(entity).State = EntityState.Modified;
         }
 
-        public void DeleteAsync(int id)
+        public async Task<Task> DeleteAsync(int id)//add check delete? exception
+
         {
-            var client = _context.Clients.FirstOrDefault(c => c.Id == id);
-            _context.Remove<Client>(client);
+            T t = await _context.Set<T>().FindAsync(id);
+            _context.Remove(t);
+
+            return Task.CompletedTask;
         }
 
-        public void SaveAsync()
+        public async void SaveAsync()
         {
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
     }
 }

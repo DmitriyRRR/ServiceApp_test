@@ -6,9 +6,9 @@ namespace ServiceApp.Repository
     {
         Task<List<T>> GetAllAsync();
         Task<T?> GetByIdAsynk(int id);
-        void InsertAsync(T entity);
+        Task<Task> InsertAsync(T entity);
         void UpdateAsync(T entity);
-        void DeleteAsync(int id);
+        Task<Task> DeleteAsync(int id);
         void SaveAsync();
     }
 }

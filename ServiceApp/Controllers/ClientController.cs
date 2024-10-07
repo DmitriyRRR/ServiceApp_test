@@ -43,8 +43,26 @@ namespace ServiceApp.Controllers
         [Route("delete")]
         public async Task DeleteClientAsync(int id)
         {
-            _repository.DeleteAsync(id);
+            //Client? client = _context.Clients.FirstOrDefault(c=>c.Id==id);
+            //_context.Remove(client);
+            //_context.SaveChanges();
+            await _repository.DeleteAsync(id);
             _repository.SaveAsync();
+        }
+
+        [HttpPost]
+        [Route("add")]
+        public async Task<Task> AddClientAsync(Client client)
+        {
+            if (ModelState.IsValid)
+            {
+                await _context.AddAsync(new Client
+                {
+                    Name = client.Name
+                });
+                await _context.SaveChangesAsync();
+            }
+            return Task.CompletedTask;
         }
     }
 }
