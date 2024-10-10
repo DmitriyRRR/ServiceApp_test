@@ -15,9 +15,9 @@ namespace ServiceApp.Repository
             _context = context;
         }
 
-        public async Task<List<T>> GetAllAsync()
+        public IEnumerable<T> GetAllItems()
         {
-            return await _context.Set<T>().ToListAsync();
+            return _context.Set<T>().ToList();
         }
 
         public async Task<T?> GetByIdAsynk(int id)
@@ -36,13 +36,9 @@ namespace ServiceApp.Repository
             _context.Entry(entity).State = EntityState.Modified;
         }
 
-        public async Task<Task> DeleteAsync(int id)//add check delete? exception
-
+        public async void DeleteAsync(T t)//add check delete? exception
         {
-            T t = await _context.Set<T>().FindAsync(id);
             _context.Remove(t);
-
-            return Task.CompletedTask;
         }
 
         public async void SaveAsync()

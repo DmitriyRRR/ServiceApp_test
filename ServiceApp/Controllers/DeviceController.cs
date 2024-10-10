@@ -1,32 +1,33 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ServiceApp.Database;
+using ServiceApp.Database.Models;
+using ServiceApp.Repository;
 
 namespace ServiceApp.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class DeviceController: ControllerBase
+    public class DeviceController : ControllerBase
     {
         private readonly ServiceAppContext _context;
+        private readonly IRepository<Device> _repository;
 
-        public DeviceController(ServiceAppContext context)
+        public DeviceController(IRepository<Device> repository)
         {
-            _context = context;
+            _repository = repository;
         }
         [HttpGet]
         [Route("devices")]
         public async Task<IActionResult> GetaAllDevices()
         {
-            bool isDevice = _context.Devices.Any();
-            if (isDevice)
+            var devices = _repository.GetAllItems;
+
+            if (devices == null)
             {
-                var devices = _context.Clients.ToList();
-                return Ok(devices);
+                return NotFound("Did not found any devices!");
             }
-            else
-            {
-                return NotFound("Did not found any clients!");
-            }
+
+            return Ok(devices);
         }
 
     }

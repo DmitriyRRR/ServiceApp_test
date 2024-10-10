@@ -13,6 +13,7 @@ namespace ServiceApp.Controllers
     {
         private readonly ServiceAppContext _context;
         private readonly IRepository<Client> _repository;
+
         public ClientController(ServiceAppContext context, IRepository<Client> repository)
         {
             _context = context;
@@ -23,31 +24,27 @@ namespace ServiceApp.Controllers
         [Route("clients")]
         public async Task<IActionResult> GetAllClients()
         {
-            var clients = _context.Clients.ToList();
+            var clients = _repository.GetAllItems;
+
+            if (clients == null)
+            {
+                return NotFound("Did not found any devices!");
+            }
+
             return Ok(clients);
+
         }
 
         [HttpGet]
         [Route("client")]
         public async Task<IActionResult> GetById(int id)
         {
-            var client = _context.Clients.FirstOrDefault(c => c.Id == id);
+            var client = _repository.GetByIdAsynk(id);
             if (client is null)
             {
                 return NotFound();
             }
             return Ok(client);
-        }
-
-        [HttpDelete]
-        [Route("delete")]
-        public async Task DeleteClientAsync(int id)
-        {
-            //Client? client = _context.Clients.FirstOrDefault(c=>c.Id==id);
-            //_context.Remove(client);
-            //_context.SaveChanges();
-            await _repository.DeleteAsync(id);
-            _repository.SaveAsync();
         }
 
         [HttpPost]
@@ -56,13 +53,43 @@ namespace ServiceApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _context.AddAsync(new Client
+                await _repository.InsertAsync(new Client
                 {
                     Name = client.Name
                 });
-                await _context.SaveChangesAsync();
+                _repository.SaveAsync();
             }
             return Task.CompletedTask;
+        }
+
+        [HttpDelete]
+        [Route("delete")]
+        public async Task<IActionResult> DeleteClientAsync(int id)
+        {
+            Client? client = await _repository.GetByIdAsynk(id);
+            if (client is not null)
+            {
+                _repository.DeleteAsync(client);
+                _repository.SaveAsync();
+                return Ok();
+            }
+            return NotFound();
+        }
+
+        [HttpPost]
+        [Route("update")]
+        public async Task<Task> UpdateClientAsync(Client client)
+        {
+            if (ModelState.IsValid)
+            {
+                _repository.UpdateAsync(client);
+                _repository.SaveAsync();
+                return Task.CompletedTask;
+            }
+            else
+            {
+                throw new ArgumentException(nameof(client.Id), $"{nameof(client.Id)} isn't alid");
+            }
         }
     }
 }
