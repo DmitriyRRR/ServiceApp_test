@@ -49,7 +49,7 @@ namespace ServiceApp.Controllers
 
         [HttpPost]
         [Route("add")]
-        public async Task<Task> AddClientAsync(Client client)
+        public async Task<IActionResult> AddClientAsync(Client client)
         {
             if (ModelState.IsValid)
             {
@@ -59,7 +59,7 @@ namespace ServiceApp.Controllers
                 });
                 _repository.SaveAsync();
             }
-            return Task.CompletedTask;
+            return Ok("added new client");
         }
 
         [HttpDelete]
@@ -78,17 +78,17 @@ namespace ServiceApp.Controllers
 
         [HttpPost]
         [Route("update")]
-        public async Task<Task> UpdateClientAsync(Client client)
+        public async Task<IActionResult> UpdateClientAsync(Client client)
         {
             if (ModelState.IsValid)
             {
                 _repository.UpdateAsync(client);
                 _repository.SaveAsync();
-                return Task.CompletedTask;
+                return Ok("update completed");
             }
             else
             {
-                throw new ArgumentException(nameof(client.Id), $"{nameof(client.Id)} isn't alid");
+                return BadRequest("update ");
             }
         }
     }

@@ -6,7 +6,7 @@ namespace ServiceApp.Repository
     {
         IEnumerable<T> GetAllItems();
         Task<T?> GetByIdAsynk(int id);
-        Task<Task> InsertAsync(T entity);
+        Task InsertAsync(T entity);
         void UpdateAsync(T entity);
         void DeleteAsync(T entity);
         void SaveAsync();

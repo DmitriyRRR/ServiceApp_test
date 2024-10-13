@@ -25,10 +25,9 @@ namespace ServiceApp.Repository
             return await _context.Set<T>().FindAsync(id);
         }
 
-        public async Task<Task> InsertAsync(T entity)
+        public async Task InsertAsync(T entity)
         {
             _context.Add<T>(entity);
-            return Task.CompletedTask;
         }
 
         public void UpdateAsync(T entity)
