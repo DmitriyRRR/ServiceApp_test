@@ -46,7 +46,7 @@ namespace ServiceApp.Controllers
             //Client? client = _context.Clients.FirstOrDefault(c=>c.Id==id);
             //_context.Remove(client);
             //_context.SaveChanges();
-            await _repository.DeleteAsync(id);
+            _repository.DeleteAsync(id);
             _repository.SaveAsync();
         }
 
