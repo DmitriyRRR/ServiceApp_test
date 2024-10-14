@@ -11,8 +11,8 @@ namespace ServiceApp.Database
 
         public ServiceAppContext(DbContextOptions<ServiceAppContext> options) : base(options)
         {
-            Database.EnsureDeleted();
-            Database.EnsureCreated();
+            //Database.EnsureDeleted();
+            //Database.EnsureCreated();
         }
 
         protected override void OnModelCreating(ModelBuilder builder)

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using NuGet.Protocol.Core.Types;
 using ServiceApp.Database;
 using ServiceApp.Database.Models;
@@ -11,11 +12,13 @@ namespace ServiceApp.Controllers
     [Route("[controller]")]
     public class ClientController : ControllerBase
     {
-        private readonly ServiceAppContext _context;
         private readonly IRepository<Client> _repository;
-        public ClientController(IRepository<Client> repository)
+        private readonly ServiceAppContext _context;
+
+        public ClientController(IRepository<Client> repository, ServiceAppContext context)
         {
             _repository = repository;
+            _context = context;
         }
 
         [HttpGet]
@@ -43,6 +46,25 @@ namespace ServiceApp.Controllers
         }
 
         [HttpPost]
+        [Route("add")]
+        public async Task<IActionResult> AddClientAsync(Client client)
+        {
+            if (ModelState.IsValid)
+            {
+                _repository.Insert(new Client
+                {
+                    Name = client.Name
+                });
+                _repository.Save();
+                return Ok(client);
+            }
+            else
+            {
+                return BadRequest("Add did not complete");
+            }
+        }
+
+        [HttpPost]
         [Route("update")]
         public async Task<IActionResult> UpdateClient(Client client)
         {
@@ -60,19 +82,22 @@ namespace ServiceApp.Controllers
             _repository.Save();
         }
 
-        [HttpPost]
-        [Route("add")]
-        public async Task<IActionResult> AddClientAsync(Client client)
+        [HttpDelete]
+        [Route("Cdelete")]
+        public async Task<string> CDelete(int id)
         {
-            if (ModelState.IsValid)
+            Client? client = _repository.GetById(id);
+            if (client != null)
             {
-                _repository.Insert(new Client
-                {
-                    Name = client.Name
-                });
-                await _context.SaveChangesAsync();
+                _context.Clients.Remove(client);
+                _context.SaveChanges();
+                return "Deleted";
             }
-            return Ok(client);
+            else
+            {
+                return "no such client";
+            }
         }
+
     }
 }
