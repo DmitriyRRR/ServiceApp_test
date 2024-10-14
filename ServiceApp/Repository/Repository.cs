@@ -15,37 +15,35 @@ namespace ServiceApp.Repository
             _context = context;
         }
 
-        public IEnumerable<T> GetAllAsync()
+        public IEnumerable<T> GetAll()
         {
             return _context.Set<T>().ToList();
         }
 
-        public async Task<T?> GetByIdAsynk(int id)
+        public T GetById(int id)
         {
-            return await _context.Set<T>().FindAsync(id);
+            return _context.Set<T>().Find(id);
         }
 
-        public async Task<Task> InsertAsync(T entity)
+        public void  Insert(T entity)
         {
             _context.Add<T>(entity);
-            return Task.CompletedTask;
         }
 
-        public void UpdateAsync(T entity)
+        public void Update(T entity)
         {
-            _context.Entry(entity).State = EntityState.Modified;
+            _context.Update<T>(entity).State = EntityState.Modified;
         }
 
-        public void DeleteAsync(int id)//add check delete? exception
+        public void Delete(T t)//add check delete? exception
 
         {
-            T t =_context.Set<T>().Find(id);
             _context.Remove(t);
         }
 
-        public async void SaveAsync()
+        public async void Save()
         {
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
     }
 }

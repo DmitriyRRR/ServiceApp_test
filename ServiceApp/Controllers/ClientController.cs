@@ -24,6 +24,10 @@ namespace ServiceApp.Controllers
         public async Task<IActionResult> GetAllClients()
         {
             var clients = _context.Clients.ToList();
+            if (clients is null)
+            {
+                return NotFound();
+            }
             return Ok(clients);
         }
 
@@ -39,30 +43,37 @@ namespace ServiceApp.Controllers
             return Ok(client);
         }
 
+        [HttpPost]
+        [Route("update")]
+        public async Task<IActionResult> UpdateClient(Client client)
+        {
+            _repository.Update(client);
+            _repository.Save();
+            return Ok(client);
+        }
+
         [HttpDelete]
         [Route("delete")]
         public async Task DeleteClientAsync(int id)
         {
-            //Client? client = _context.Clients.FirstOrDefault(c=>c.Id==id);
-            //_context.Remove(client);
-            //_context.SaveChanges();
-            _repository.DeleteAsync(id);
-            _repository.SaveAsync();
+            Client? client = _repository.GetById(id);
+            _repository.Delete(client);
+            _repository.Save();
         }
 
         [HttpPost]
         [Route("add")]
-        public async Task<Task> AddClientAsync(Client client)
+        public async Task<IActionResult> AddClientAsync(Client client)
         {
             if (ModelState.IsValid)
             {
-                await _context.AddAsync(new Client
+                _repository.Insert(new Client
                 {
                     Name = client.Name
                 });
                 await _context.SaveChangesAsync();
             }
-            return Task.CompletedTask;
+            return Ok(client);
         }
     }
 }

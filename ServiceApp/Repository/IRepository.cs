@@ -4,11 +4,11 @@ namespace ServiceApp.Repository
 {
     public interface IRepository <T> where T : class
     {
-        IEnumerable<T> GetAllAsync();
-        Task<T?> GetByIdAsynk(int id);
-        Task<Task> InsertAsync(T entity);
-        void UpdateAsync(T entity);
-        void DeleteAsync(int id);
-        void SaveAsync();
+        IEnumerable<T> GetAll();
+        T? GetById(int id);
+        void Insert(T entity);
+        void Update(T entity);
+        void Delete(T entity);
+        void Save();
     }
 }
