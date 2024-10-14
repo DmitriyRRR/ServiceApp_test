@@ -11,8 +11,8 @@ namespace ServiceApp.Database
 
         public ServiceAppContext(DbContextOptions<ServiceAppContext> options) : base(options)
         {
-            //Database.EnsureDeleted();
-            //Database.EnsureCreated();
+            Database.EnsureDeleted();
+            Database.EnsureCreated();
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -21,7 +21,14 @@ namespace ServiceApp.Database
             builder.Entity<Client>().HasData(
                     new Client { Id = 1, Name = "Jhon" },
                     new Client { Id = 2, Name = "Den" },
-                    new Client { Id = 3, Name = "Tom" }
+                    new Client { Id = 3, Name = "Tom" },
+                    new Client { Id = 4, Name = "William" },
+                    new Client { Id = 5, Name = "Bob" },
+                    new Client { Id = 6, Name = "Sub-zero" },
+                    new Client { Id = 7, Name = "Scorpio" },
+                    new Client { Id = 8, Name = "G.Freeman" },
+                    new Client { Id = 9, Name = "G.Man" },
+                    new Client { Id = 10, Name = "Stevie" }
                     );
             builder.Entity<Device>().HasData(
                 new Device { Id = 1, Name = "Iphone", Description = "Cell phone with 5G", ClientId = 1 },

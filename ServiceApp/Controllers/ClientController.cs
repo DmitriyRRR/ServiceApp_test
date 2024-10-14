@@ -13,9 +13,8 @@ namespace ServiceApp.Controllers
     {
         private readonly ServiceAppContext _context;
         private readonly IRepository<Client> _repository;
-        public ClientController(ServiceAppContext context, IRepository<Client> repository)
+        public ClientController(IRepository<Client> repository)
         {
-            _context = context;
             _repository = repository;
         }
 
@@ -23,7 +22,7 @@ namespace ServiceApp.Controllers
         [Route("clients")]
         public async Task<IActionResult> GetAllClients()
         {
-            var clients = _context.Clients.ToList();
+            var clients = _repository.GetAll();
             if (clients is null)
             {
                 return NotFound();
@@ -35,7 +34,7 @@ namespace ServiceApp.Controllers
         [Route("client")]
         public async Task<IActionResult> GetById(int id)
         {
-            var client = _context.Clients.FirstOrDefault(c => c.Id == id);
+            var client = _repository.GetById(id);
             if (client is null)
             {
                 return NotFound();
