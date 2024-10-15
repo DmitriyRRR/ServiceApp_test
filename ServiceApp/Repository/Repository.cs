@@ -32,7 +32,7 @@ namespace ServiceApp.Repository
 
         public void Update(T entity)
         {
-            _context.Update<T>(entity).State = EntityState.Modified;
+            _context.Entry<T>(entity).State = EntityState.Modified;
         }
 
         public void Delete(T t)//add check delete? exception

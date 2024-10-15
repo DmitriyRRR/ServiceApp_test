@@ -82,22 +82,22 @@ namespace ServiceApp.Controllers
             _repository.Save();
         }
 
-        [HttpDelete]
-        [Route("Cdelete")]
-        public async Task<string> CDelete(int id)
-        {
-            Client? client = _repository.GetById(id);
-            if (client != null)
-            {
-                _context.Clients.Remove(client);
-                _context.SaveChanges();
-                return "Deleted";
-            }
-            else
-            {
-                return "no such client";
-            }
-        }
+        //[HttpDelete]
+        //[Route("Cdelete")]
+        //public async Task<string> CDelete(int id)
+        //{
+        //    Client? client = _repository.GetById(id);
+        //    if (client != null)
+        //    {
+        //        _context.Clients.Remove(client);
+        //        _context.SaveChanges();
+        //        return "Deleted";
+        //    }
+        //    else
+        //    {
+        //        return "no such client";
+        //    }
+        //}
 
     }
 }
