@@ -19,10 +19,19 @@ namespace ServiceApp.Repository
         {
             return _context.Set<T>().ToList();
         }
+        public async  Task<IEnumerable<T>> GetAllAsync()
+        {
+            return  await _context.Set<T>().ToListAsync();
+        }
 
         public T GetById(int id)
         {
             return _context.Set<T>().Find(id);
+        }
+        
+        public async Task<T> GetByIdAsync(int id)
+        {
+            return await _context.Set<T>().FindAsync(id);
         }
 
         public void  Insert(T entity)

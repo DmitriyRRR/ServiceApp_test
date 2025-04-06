@@ -21,7 +21,7 @@ namespace ServiceApp.Controllers
         [Route("devices")]
         public async Task<IActionResult> GetaAllDevices()
         {
-            var devices = _repository.GetAll();
+            var devices = await _repository.GetAllAsync();
             if (devices != null)
             {
                 return Ok(devices);
@@ -36,7 +36,7 @@ namespace ServiceApp.Controllers
         [Route("device")]
         public async Task<IActionResult> GerDeviceById(int id)
         {
-            Device? device = _repository.GetById(id);
+            Device? device = await _repository.GetByIdAsync(id);
             if (device != null)
             {
                 return Ok(device);
