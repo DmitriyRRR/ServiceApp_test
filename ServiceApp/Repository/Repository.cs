@@ -15,23 +15,30 @@ namespace ServiceApp.Repository
             _context = context;
         }
 
-        public IEnumerable<T> GetAll()
-        {
-            return _context.Set<T>().ToList();
-        }
         public async  Task<IEnumerable<T>> GetAllAsync()
         {
             return  await _context.Set<T>().ToListAsync();
         }
+
+        public async Task<T> GetByIdAsync(int id)
+        {
+            return await _context.Set<T>().FindAsync(id);
+        }
+        
+        public async Task  InsertAsync(T entity)
+        {
+          await  _context.AddAsync<T>(entity);
+        }
+
 
         public T GetById(int id)
         {
             return _context.Set<T>().Find(id);
         }
         
-        public async Task<T> GetByIdAsync(int id)
+        public IEnumerable<T> GetAll()
         {
-            return await _context.Set<T>().FindAsync(id);
+            return _context.Set<T>().ToList();
         }
 
         public void  Insert(T entity)
@@ -50,9 +57,24 @@ namespace ServiceApp.Repository
             _context.Remove(t);
         }
 
-        public async void Save()
+        public void Save()
         {
             _context.SaveChanges();
+        }
+
+        public async Task SaveAsync()
+        {
+           await _context.SaveChangesAsync();
+        }
+
+        public Task UpdateAsync(T entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteAsynk(T entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }

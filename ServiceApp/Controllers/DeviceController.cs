@@ -45,6 +45,21 @@ namespace ServiceApp.Controllers
         }
 
         [HttpPost]
+        [Route("addAsync")]
+        public async Task<IActionResult> AddDeviceAsync(Device device)
+        {
+            if (ModelState.IsValid)
+            {
+                _repository.Insert(device);
+                await _repository.SaveAsync();
+                return Ok(device);
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+        [HttpPost]
         [Route("add")]
         public async Task<IActionResult> AddDevice(Device device)
         {
