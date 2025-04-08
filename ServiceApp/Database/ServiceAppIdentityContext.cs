@@ -6,7 +6,7 @@ namespace ServiceApp.Database
 {
     public class ServiceAppIdentityContext : IdentityDbContext<User>
     {
-        public DbSet<User> Users { get; set; } = null;
+        public DbSet<User>? Users { get; set; } = null;
 
         public ServiceAppIdentityContext(DbContextOptions<ServiceAppIdentityContext> options) : base(options)
         {

@@ -8,7 +8,7 @@ namespace ServiceApp.Repository
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        private readonly ServiceAppContext _context = null;
+        private readonly ServiceAppContext _context;
 
         public Repository(ServiceAppContext context)
         {
@@ -20,7 +20,7 @@ namespace ServiceApp.Repository
             return  await _context.Set<T>().ToListAsync();
         }
 
-        public async Task<T> GetByIdAsync(int id)
+        public async Task<T?> GetByIdAsync(int id)
         {
             return await _context.Set<T>().FindAsync(id);
         }
@@ -31,7 +31,7 @@ namespace ServiceApp.Repository
         }
 
 
-        public T GetById(int id)
+        public T? GetById(int id)
         {
             return _context.Set<T>().Find(id);
         }

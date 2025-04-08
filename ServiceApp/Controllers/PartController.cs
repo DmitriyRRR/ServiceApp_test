@@ -16,7 +16,7 @@ namespace ServiceApp.Controllers
         [Route("parts")]
         public async Task<IActionResult> GetAllParts()
         {
-            var parts = _repository.GetAll();
+            var parts = await _repository.GetAllAsync();
             if (parts.Any())
             {
                 return Ok(parts);
@@ -31,7 +31,7 @@ namespace ServiceApp.Controllers
         [Route("part")]
         public async Task<IActionResult> GetPartById(int id)
         {
-            Part part = _repository.GetById(id);
+            Part? part = await _repository.GetByIdAsync(id);
             if (part == null)
             {
                 return NotFound();
@@ -51,7 +51,7 @@ namespace ServiceApp.Controllers
                     Description = part.Description,
                     DeviceId = part.DeviceId
                 });
-                _repository.Save();
+                await _repository.SaveAsync();
                 return Ok(part);
             }
             return BadRequest("Update problem");
@@ -64,7 +64,7 @@ namespace ServiceApp.Controllers
             if (ModelState.IsValid)
             {
                 _repository.Update(part);
-                _repository.Save();
+                await _repository.SaveAsync();
                 return Ok(part);
             }
             return BadRequest();
@@ -74,12 +74,18 @@ namespace ServiceApp.Controllers
         [Route("delete")]
         public async Task<IActionResult> DeletePart(int id)
         {
-            if(id>0)
+            if (id > 0)
             {
-               Part part =  _repository.GetById(id);
-                _repository.Delete(part);
+                Part? part = await _repository.GetByIdAsync(id);
+                if (part != null)
+                {
+                    _repository.Delete(part);
+                }
+                else
+                return BadRequest("delete problem");
+
             }
             return BadRequest("delete problem");
         }
-        }
     }
+}

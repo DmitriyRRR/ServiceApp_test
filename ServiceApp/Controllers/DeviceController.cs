@@ -88,7 +88,7 @@ namespace ServiceApp.Controllers
             }
             else
             {
-                return BadRequest("Delte problem");
+                return BadRequest("Delete problem");
             }
         }
 

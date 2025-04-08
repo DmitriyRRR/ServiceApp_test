@@ -25,7 +25,7 @@ namespace ServiceApp.Controllers
         [Route("clients")]
         public async Task<IActionResult> GetAllClients()
         {
-            var clients = _repository.GetAll();
+            var clients =await _repository.GetAllAsync();
             if (clients is null)
             {
                 return NotFound();
@@ -37,7 +37,7 @@ namespace ServiceApp.Controllers
         [Route("client")]
         public async Task<IActionResult> GetById(int id)
         {
-            var client = _repository.GetById(id);
+            Client? client = await _repository.GetByIdAsync(id);
             if (client is null)
             {
                 return NotFound();
@@ -55,7 +55,7 @@ namespace ServiceApp.Controllers
                 {
                     Name = client.Name
                 });
-                _repository.Save();
+                await _repository.SaveAsync();
                 return Ok(client);
             }
             else
@@ -69,35 +69,25 @@ namespace ServiceApp.Controllers
         public async Task<IActionResult> UpdateClient(Client client)
         {
             _repository.Update(client);
-            _repository.Save();
+            await _repository.SaveAsync();
             return Ok(client);
         }
 
         [HttpDelete]
         [Route("delete")]
-        public async Task DeleteClientAsync(int id)
+        public async Task<IActionResult> DeleteClient(int id)
         {
-            Client? client = _repository.GetById(id);
-            _repository.Delete(client);
-            _repository.Save();
+            Client? client =await _repository.GetByIdAsync(id);
+            if (client!= null)
+            {
+                _repository.Delete(client);
+                await _repository.SaveAsync();
+                return Ok();
+            }
+            else
+            {
+                return BadRequest("Delete problem");
+            }
         }
-
-        //[HttpDelete]
-        //[Route("Cdelete")]
-        //public async Task<string> CDelete(int id)
-        //{
-        //    Client? client = _repository.GetById(id);
-        //    if (client != null)
-        //    {
-        //        _context.Clients.Remove(client);
-        //        _context.SaveChanges();
-        //        return "Deleted";
-        //    }
-        //    else
-        //    {
-        //        return "no such client";
-        //    }
-        //}
-
     }
 }
