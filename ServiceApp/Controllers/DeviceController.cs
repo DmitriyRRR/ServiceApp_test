@@ -9,7 +9,6 @@ namespace ServiceApp.Controllers
     [Route("[controller]")]
     public class DeviceController : ControllerBase
     {
-        private readonly ServiceAppContext _context;
         private readonly IRepository<Device> _repository;
 
         public DeviceController(IRepository<Device> repository)
@@ -45,28 +44,13 @@ namespace ServiceApp.Controllers
         }
 
         [HttpPost]
-        [Route("addAsync")]
-        public async Task<IActionResult> AddDeviceAsync(Device device)
-        {
-            if (ModelState.IsValid)
-            {
-                _repository.Insert(device);
-                await _repository.SaveAsync();
-                return Ok(device);
-            }
-            else
-            {
-                return BadRequest();
-            }
-        }
-        [HttpPost]
         [Route("add")]
         public async Task<IActionResult> AddDevice(Device device)
         {
             if (ModelState.IsValid)
             {
                 _repository.Insert(device);
-                _repository.Save();
+                await _repository.SaveAsync();
                 return Ok(device);
             }
             else
@@ -82,7 +66,7 @@ namespace ServiceApp.Controllers
             if (ModelState.IsValid)
             {
                 _repository.Update(device);
-                _repository.Save();
+                await _repository.SaveAsync();
                 return Ok(device);
             }
             else
@@ -90,16 +74,17 @@ namespace ServiceApp.Controllers
                 return BadRequest();
             }
         }
+
         [HttpDelete]
         [Route("delete")]
         public async Task<IActionResult> Delete(int id)
         {
-            Device device = _repository.GetById(id);
+            Device? device = _repository.GetById(id);
             if (device != null)
             {
                 _repository.Delete(device);
-                _repository.Save();
-            return Ok();
+                await _repository.SaveAsync();
+                return Ok();
             }
             else
             {

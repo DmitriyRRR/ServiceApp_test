@@ -5,9 +5,9 @@ namespace ServiceApp.Database
 {
     public class ServiceAppContext : DbContext
     {
-        public DbSet<Client> Clients { get; set; } = null;
-        public DbSet<Device> Devices { get; set; } = null;
-        public DbSet<Part> Parts { get; set; } = null;
+        public DbSet<Client>? Clients { get; set; } = null;
+        public DbSet<Device>? Devices { get; set; } = null;
+        public DbSet<Part>? Parts { get; set; } = null;
 
         public ServiceAppContext(DbContextOptions<ServiceAppContext> options) : base(options)
         {
