@@ -40,11 +40,11 @@ namespace ServiceApp.Database
             builder.Entity<Part>().HasData(
                 new Part { Id=1, Name="main flex", Description="n.a.", DeviceId=2},
                 new Part { Id=2, Name="battery Iph.6S", Description="for Iphone 6s", DeviceId =1},
-                new Part { Id=3, Name="Main camera Iph.XS", Description="n.a."},
-                new Part { Id=4, Name="Top case", Description="n.a."},
-                new Part { Id=5, Name="Keyboard", Description="n.a."},
-                new Part { Id=6, Name="Speaker", Description="n.a."},
-                new Part { Id=7, Name="LCD flex", Description="n.a."}
+                new Part { Id=3, Name="Main camera Iph.XS", Description="n.a.", DeviceId = 1},
+                new Part { Id=4, Name="Top case", Description="n.a.", DeviceId = 3 },
+                new Part { Id=5, Name="Keyboard", Description="n.a.", DeviceId = 4},
+                new Part { Id=6, Name="Speaker", Description="n.a.", DeviceId = 5},
+                new Part { Id=7, Name="LCD flex", Description="n.a.", DeviceId = 4}
                 );
         }
     }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol;
 using NuGet.Protocol.Core.Types;
 using ServiceApp.Database;
 using ServiceApp.Database.Models;
@@ -25,7 +26,7 @@ namespace ServiceApp.Controllers
         [Route("clients")]
         public async Task<IActionResult> GetAllClients()
         {
-            var clients =await _repository.GetAllAsync();
+            var clients =await _context.Clients.Include(c=>c.Devices).ToListAsync();
             if (clients is null)
             {
                 return NotFound();
@@ -37,7 +38,8 @@ namespace ServiceApp.Controllers
         [Route("client")]
         public async Task<IActionResult> GetById(int id)
         {
-            Client? client = await _repository.GetByIdAsync(id);
+            // Client? client = await _repository.GetByIdAsync(id);
+            Client? client = await _context.Clients.Include(c=>c.Devices).FirstOrDefaultAsync();
             if (client is null)
             {
                 return NotFound();
